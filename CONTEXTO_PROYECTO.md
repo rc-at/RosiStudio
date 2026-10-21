@@ -187,13 +187,71 @@ git status
 
 ---
 
-## 9. Próximos Pasos Recomendados para la Etapa 2
+## 9. Registro Detallado de Pendientes y Hoja de Ruta para Siguientes Sesiones
 
-1. **Conexión a Firebase Real:**
-   - Probar el inicio de sesión real con Google en el panel de administración.
-   - Crear las primeras citas reales en la base de datos de producción.
-2. **CRUD Administrativo en Tiempo Real:**
-   - Permitir a la administradora agregar, pausar o modificar precios de servicios directamente desde la pestaña de gestión del panel.
-   - Configuración editable de feriados y horarios especiales desde la interfaz.
-3. **Despliegue Continuo:**
-   - Configurar el despliegue automático hacia Firebase Hosting o servicio compatible con Next.js.
+Esta sección desglosa de manera exhaustiva todos los elementos que requieren configuración, desarrollo o definición en las siguientes etapas del proyecto.
+
+---
+
+### A. Configuraciones de Entorno e Infraestructura (Firebase Real)
+
+- [ ] **Creación del Proyecto en Firebase Console:**
+  - [ ] Registrar proyecto nuevo (ej. `rosi-studio-prod` o similar) en [Firebase Console](https://console.firebase.google.com).
+  - [ ] Registrar la aplicación web (`</>`) y obtener las credenciales públicas (`apiKey`, `projectId`, `messagingSenderId`, `appId`, etc.).
+- [ ] **Archivo de Variables de Entorno (`.env.local`):**
+  - [ ] Copiar `.env.example` a `.env.local`.
+  - [ ] Completar las variables `NEXT_PUBLIC_FIREBASE_*` con los valores reales.
+  - [ ] Configurar los correos de las administradoras en `NEXT_PUBLIC_ADMIN_EMAILS`.
+  - [ ] Configurar el número real de WhatsApp del negocio en `NEXT_PUBLIC_WHATSAPP_NUMBER`.
+- [ ] **Habilitación de Firebase Authentication:**
+  - [ ] Activar el método de inicio de sesión **Google**.
+  - [ ] Añadir los dominios autorizados de desarrollo (`localhost`) y del dominio final de producción.
+- [ ] **Despliegue de Base de Datos Cloud Firestore:**
+  - [ ] Inicializar Firestore en modo de Producción en la región deseada (ej. `southamerica-east1` o `us-central1`).
+  - [ ] Publicar y activar el contenido de [firestore.rules](file:///Users/roy-asmad/Documents/Web/RosiStudio/firestore.rules).
+  - [ ] Publicar los índices compuestos definidos en [firestore.indexes.json](file:///Users/roy-asmad/Documents/Web/RosiStudio/firestore.indexes.json).
+- [ ] **Inicialización del Primer Administrador Confiable:**
+  - [ ] Iniciar sesión una vez con la cuenta Google de la administradora para generar su `UID` en Authentication.
+  - [ ] Crear el documento en la colección `admin_roles/{UID_ADMINISTRADORA}` con el campo `{ active: true }`.
+
+---
+
+### B. Limitaciones Técnicas y de Seguridad Pendientes
+
+- [ ] **Garantía Contra Reservas Simultáneas en el Mismo Segundo (Concurrencia):**
+  - *Estado actual:* Dos clientes que soliciten el mismo horario en el mismo milisegundo se registran como `PENDIENTE` y la administradora resuelve la colisión manualmente al revisar y aceptar.
+  - *Pendiente para etapas avanzadas:* Evaluar si es necesario implementar un bloqueo transaccional a nivel de milisegundos mediante un Route Handler de Next.js (`/api/reservas`) o Cloud Function que use transacciones de Firestore (`runTransaction`).
+- [ ] **Seguridad de Consulta de Citas sin Cuenta:**
+  - *Estado actual:* Los clientes consultan su cita mediante el código generado en la URL `/citas/[id]`.
+  - *Pendiente:* Evaluar si se requiere un token temporal firmado o verificación por código OTP para proteger citas de clientes no autenticados sin depender únicamente del ID.
+
+---
+
+### C. Funcionalidades Funcionales Pendientes (Etapa 2)
+
+- [ ] **Mutación y Edición del Catálogo desde el Panel Admin:**
+  - [ ] Formulario interactivo en `/admin` para agregar nuevos servicios y productos.
+  - [ ] Edición de precios en Soles (PEN), duraciones en minutos y descripciones.
+  - [ ] Interruptores para activar o pausar servicios sin eliminarlos.
+- [ ] **Gestión Dinámica de Días No Laborables y Feriados:**
+  - [ ] Permitir a la administradora agregar fechas festivas o días libres específicos directamente desde la pestaña de horarios del panel.
+  - [ ] Soporte para bloqueo de franjas horarias específicas (ej. mantenimiento, receso o almuerzo).
+- [ ] **Edición de Datos de la Empresa:**
+  - [ ] Formulario editable en `/admin` para actualizar teléfono, dirección, horario habitual y tarifa por atención a domicilio.
+- [ ] **Soporte Futuro Multi-Profesional:**
+  - [ ] La arquitectura actual está modelada para un profesional individual (Rosi).
+  - [ ] Dejar abierta la posibilidad de asociar servicios y turnos a especialistas específicos si el negocio suma más personal.
+
+---
+
+### D. Contenido, Activos Visuales y Publicación
+
+- [ ] **Sustitución de Contenidos y Precios Oficiales:**
+  - [ ] Validar con la dueña del negocio los precios reales de los servicios (actualmente identificados como referenciales de demostración).
+  - [ ] Validar el importe exacto del recargo por atención a domicilio (actualmente referencial en S/ 15.00).
+- [ ] **Activos Gráficos Definitivos:**
+  - [ ] Reemplazar las fotos de demostración de Unsplash por fotografías de trabajos reales del salón cuando estén disponibles.
+  - [ ] Integrar el archivo vectorial final del logotipo original si se proporciona en formato SVG o PNG en alta resolución.
+- [ ] **Despliegue a Producción (Hosting):**
+  - [ ] Configurar el archivo `firebase.json` para despliegue en **Firebase Hosting**.
+  - [ ] Validar si se utiliza exportación estática (`output: 'export'`) o Firebase App Hosting según las necesidades de funciones de servidor.
