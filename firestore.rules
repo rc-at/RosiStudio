@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: checks if request is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: checks if user has admin privileges
+    // Checks against the trusted admin_roles collection
+    function isAdmin() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/admin_roles/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/admin_roles/$(request.auth.uid)).data.active == true;
+    }
+
+    // Colección: admin_roles
+    // Solo lectura y escritura por administradores existentes (el primer admin se inicializa mediante consola)
+    match /admin_roles/{uid} {
+      allow read: if isAuthenticated() && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // Colección: services
+    // Catálogo público de lectura. Solo el administrador puede modificar servicios o precios.
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Colección: products
+    // Catálogo público de productos. Modificaciones reservadas al administrador.
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Colección: businessHours y settings
+    // Lectura pública para calcular disponibilidad en el cliente.
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /businessHours/{dayId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /blockedDates/{dateId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Colección: appointments (Citas)
+    // Reglas estrictas:
+    // - Creación: permitida a clientes pero forzando que el estado inicial sea 'PENDIENTE'
+    // - Lectura: administradores pueden leer todas; clientes solo las asociadas a su UID
+    // - Actualización: solo administradores pueden cambiar estado a 'ACEPTADA', 'RECHAZADA' o 'COMPLETADA'
+    match /appointments/{appointmentId} {
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.clientUid == request.auth.uid);
+      
+      // Creación pública de solicitudes de cita
+      allow create: if request.resource.data.status == 'PENDIENTE'
+                    && request.resource.data.clientName is string
+                    && request.resource.data.clientPhone is string
+                    && request.resource.data.date is string
+                    && request.resource.data.startTime is string
+                    && request.resource.data.endTime is string
+                    && request.resource.data.totalPrice is number
+                    && request.resource.data.services is list;
+
+      // Modificación: solo administradores
+      allow update: if isAdmin();
+      
+      // Eliminación: solo administradores
+      allow delete: if isAdmin();
+    }
+
+    // Colección: users
+    match /users/{userId} {
+      allow read, write: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+    }
+  }
+}
