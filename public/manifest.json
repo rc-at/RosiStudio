@@ -1,0 +1,18 @@
+{
+  "name": "ROSI STUDIO — Expertos en Belleza",
+  "short_name": "Rosi Studio",
+  "description": "Sistema de reservas y citas de barbería, peluquería, trenzas y estética en salón o a domicilio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F6F2",
+  "theme_color": "#C9A34E",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

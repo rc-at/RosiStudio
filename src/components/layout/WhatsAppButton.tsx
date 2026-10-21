@@ -8,7 +8,7 @@ export function WhatsAppButton() {
   const whatsappUrl = `https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20ROSI%20STUDIO,%20quisiera%20hacer%20una%20consulta%20sobre%20sus%20servicios%20y%20citas`;
 
   return (
-    <aside aria-label="Contacto directo por WhatsApp" className="fixed bottom-6 right-6 z-50">
+    <aside aria-label="Contacto directo por WhatsApp" className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-30">
       <a
         href={whatsappUrl}
         target="_blank"

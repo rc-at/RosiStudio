@@ -3,7 +3,8 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { Navbar } from '@/components/layout/Navbar';
+import { AppHeader } from '@/components/layout/AppHeader';
+import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { fetchAppointmentById } from '@/lib/firebase/firestore';
@@ -188,16 +189,16 @@ function AppointmentDetailContent() {
 export default function AppointmentStatusPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F6F2]">
-      <Navbar />
+      <AppHeader />
 
-      <main className="flex-1 py-12 md:py-16">
+      <main className="flex-1 py-8 md:py-16">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6B6863] hover:text-[#171717] mb-6 transition-colors"
+            href="/citas"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6B6863] hover:text-[#171717] mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Volver al Inicio</span>
+            <span>Volver a Mis Citas</span>
           </Link>
 
           <Suspense
@@ -214,6 +215,7 @@ export default function AppointmentStatusPage() {
       </main>
 
       <Footer />
+      <BottomNav />
       <WhatsAppButton />
     </div>
   );

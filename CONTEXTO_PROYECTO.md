@@ -1,7 +1,7 @@
 # ROSI STUDIO — Contexto Integral y Estado del Proyecto
 
 > **Fecha de creación del documento:** 21 de octubre de 2026  
-> **Estado actual:** Etapa 1 completada con éxito (Estructura base, arquitectura desacoplada, interfaz visual responsiva y motor de disponibilidad).  
+> **Estado actual:** Etapa 1 completada + **Rediseño UX/UI Mobile App First (PWA-Ready) completado con éxito.**  
 > **Propósito:** Registrar todos los requisitos, decisiones arquitectónicas, código implementado, configuraciones pendientes y próximos pasos para retomar el desarrollo en cualquier momento sin pérdida de alcance.
 
 ---
@@ -61,6 +61,9 @@
 ├── package.json                          # Dependencias: next, react 19, firebase, lucide-react, tailwindcss v4
 ├── tsconfig.json                         # Configuración estricta de TypeScript
 ├── CONTEXTO_PROYECTO.md                  # Este documento de contexto integral
+├── public/
+│   ├── manifest.json                     # PWA Web App Manifest (standalone, theme_color, icons)
+│   └── icon.svg                          # Emblema oficial en SVG para icono de aplicación
 └── src/
     ├── types/
     │   └── index.ts                      # Interfaces de Dominio (Service, Product, Appointment, etc.)
@@ -76,27 +79,78 @@
     ├── components/
     │   ├── layout/
     │   │   ├── BrandLogo.tsx             # Emblema circular oficial
-    │   │   ├── Navbar.tsx                # Barra de navegación con drawer táctil móvil
+    │   │   ├── AppHeader.tsx             # Cabecera compacta app móvil / barra horizontal desktop
+    │   │   ├── BottomNav.tsx             # Barra fija inferior móvil de 5 pestañas (Safe-Area)
+    │   │   ├── Navbar.tsx                # Re-export de AppHeader para retrocompatibilidad
     │   │   ├── Footer.tsx                # Pie de página con información de contacto y horarios
-    │   │   └── WhatsAppButton.tsx        # Botón flotante para WhatsApp
+    │   │   └── WhatsAppButton.tsx        # Botón flotante para WhatsApp con safe-area
     │   ├── home/
-    │   │   ├── HeroSection.tsx           # Portada con título «Tu belleza, tu momento»
-    │   │   ├── FeaturedServices.tsx      # Servicios destacados con acceso directo a reserva
-    │   │   ├── ExperienceGallery.tsx     # Muestra visual de trabajos realizados
-    │   │   ├── ProductsTeaser.tsx        # Catálogo destacado de productos
-    │   │   └── BusinessInfoSection.tsx   # Modalidades (Local vs Domicilio) y garantías de higiene
+    │   │   ├── MobileAppHero.tsx         # Tarjeta de acción inmediata VIP con botón "Reservar cita"
+    │   │   ├── CategoryChips.tsx         # Fila táctil de acceso rápido a categorías (scroll horizontal)
+    │   │   ├── PopularServicesScroll.tsx # Carrusel snap de servicios populares
+    │   │   ├── LooksGalleryScroll.tsx    # Historias/looks recientes realizados
+    │   │   ├── ProductsScroll.tsx        # Carrusel de productos recomendados con enlace a WhatsApp
+    │   │   └── CompactSalonInfo.tsx      # Información compacta del local y atención a domicilio
     │   └── booking/
     │       └── BookingWizard.tsx         # Asistente interactivo de reserva (5 pasos + éxito)
     └── app/
-        ├── layout.tsx                    # Shell raíz con fuentes Playfair/Lato y metadata SEO
-        ├── globals.css                   # Tokens de diseño y scrollbar personalizado
-        ├── page.tsx                      # Página de Inicio
-        ├── servicios/page.tsx            # Catálogo completo con buscador y filtro por categorías
-        ├── productos/page.tsx            # Catálogo informativo con botón de consulta por WhatsApp
-        ├── reservar/page.tsx             # Página de reserva de citas (Wizard guiado)
-        ├── admin/page.tsx                # Panel de administración con KPIs y gestión de citas
-        └── citas/[id]/page.tsx           # Consulta pública del estado de una cita por su código
+        ├── layout.tsx                    # Shell raíz con metadata PWA, viewportFit cover y fuentes
+        ├── globals.css                   # Tokens, safe-area padding inferior y no-scrollbar utilities
+        ├── page.tsx                      # Pantalla de Inicio estilo App Móvil
+        ├── servicios/page.tsx            # Catálogo móvil con chips de categoría y buscador reactivo
+        ├── productos/page.tsx            # Catálogo de productos con consulta directa vía WhatsApp
+        ├── reservar/page.tsx             # Asistente de reserva adaptado a teléfonos
+        ├── citas/page.tsx                # "Mis Citas" con filtros por estado y buscador por código
+        ├── citas/[id]/page.tsx           # Consulta directa y seguimiento de cita específica
+        ├── perfil/page.tsx               # Perfil de usuario, Google Auth y menú de cuenta
+        └── admin/page.tsx                # Panel de administración con vista dual (tarjetas móvil / tabla desktop)
 ```
+
+---
+
+## 5. Rediseño UX/UI — Enfoque Mobile App First (PWA-Ready)
+
+En esta etapa se transformó la experiencia web convencional en una **interfaz de aplicación móvil nativa (PWA)**, optimizada para anchos de pantalla táctil entre **360px y 430px** (iPhone / Android), manteniendo total funcionalidad en computadoras de escritorio.
+
+### A. Barra de Navegación Fija Inferior (`BottomNav.tsx`)
+- **5 destinos clave:** `Inicio`, `Servicios`, `Reservar`, `Mis Citas` y `Perfil`.
+- **Botón Reservar Destacado:** Posicionado en el centro en color dorado de marca (`#C9A34E`) con sombra suave y elevación ergonómica al alcance directo del pulgar.
+- **Respeto a Áreas Seguras:** Implementa `env(safe-area-inset-bottom)` y clase de padding inferior global `pb-[calc(4.5rem+env(safe-area-inset-bottom))]` en móviles para garantizar que el contenido nunca quede oculto detrás de la barra.
+- **Comportamiento en Escritorio:** Se oculta automáticamente en pantallas grandes (`md:hidden`), delegando la navegación al menú horizontal de `AppHeader`.
+
+### B. Encabezado Compacto de Aplicación (`AppHeader.tsx`)
+- Sustituye la cabecera corporativa pesada por una barra superior limpia y de baja altura (56px) con:
+  - Logotipo vectorial `ROSI STUDIO` a la izquierda.
+  - Indicador de ubicación de salón a la derecha en móvil y atajo directo al perfil del cliente.
+  - Menú de navegación horizontal compacto con estado activo en versión de escritorio (`md:flex`).
+
+### C. Nueva Pantalla de Inicio Estilo Aplicación
+1. **Tarjeta VIP de Reserva Rápida (`MobileAppHero.tsx`):** Saludo personalizado, título «Tu belleza, tu momento» y llamada a la acción prominente que no desplaza la pantalla.
+2. **Chips de Categoría (`CategoryChips.tsx`):** Fila con desplazamiento táctil horizontal fluido (`no-scrollbar`) para saltar de inmediato a cualquier especialidad (Cortes, Trenzas, Manicure, Pedicure, Tintes, Cejas, Peinados).
+3. **Servicios Populares (`PopularServicesScroll.tsx`):** Carrusel horizontal con ajuste por parada (`snap-x-mandatory`) con insignias de duración, precio en Soles y botón táctil de reserva.
+4. **Galería de Looks Recientes (`LooksGalleryScroll.tsx`):** Formato tipo tarjeta de historias de Instagram para apreciar resultados reales de trenzas, cortes y color.
+5. **Productos Destacados (`ProductsScroll.tsx`):** Productos con consulta asistida directa vía WhatsApp.
+6. **Información Compacta (`CompactSalonInfo.tsx`):** Horarios, ubicación física y transparencia sobre la modalidad a domicilio.
+
+### D. Nuevas Pantallas de Aplicación
+- **`/citas` (Mis Citas):**
+  - Control segmentado deslizable para filtrar citas por estado: `TODAS`, `PENDIENTES`, `CONFIRMADAS`, `COMPLETADAS`, `CANCELADAS`.
+  - Buscador en tiempo real por código de reserva o nombre de cliente.
+  - Tarjetas de cita táctiles compactas con fecha, hora, modalidad, desglose de servicios, costo y botón para consultar detalles completos.
+- **`/perfil` (Perfil de Usuario):**
+  - Identificación visual del cliente (avatar, nombre, correo y etiqueta de estado).
+  - Autenticación con Google conectada a `signInWithGoogle` / `signOut` con fallback seguro para modo invitado.
+  - Menú de accesos directos: Mis Citas, Reservar Turno, Soporte por WhatsApp y Acceso al Panel Administrativo.
+
+### E. Panel de Administración Responsivo (`/admin`)
+- En dispositivos móviles (`md:hidden`), las reservas se presentan en **tarjetas táctiles interactivas individuales**, eliminando el scroll horizontal forzado de tablas anchas.
+- Cada tarjeta incluye botones directos de acción táctil con el pulgar: **Aceptar**, **Rechazar** y **Completar**, con modal de confirmación de seguridad.
+- En pantallas grandes (`hidden md:block`), se preserva la tabla de alta densidad para gestión rápida de múltiples citas.
+
+### F. Preparación para PWA (Progressive Web App)
+- `public/manifest.json`: Configurado con `display: "standalone"`, `name: "ROSI STUDIO — Expertos en Belleza"`, `short_name: "ROSI STUDIO"`, `theme_color: "#171717"` y `background_color: "#F8F6F2"`.
+- `public/icon.svg`: Icono vectorial nítido con el sello oficial de la marca para la pantalla de inicio del teléfono.
+- `src/app/layout.tsx`: Configuración `viewportFit: "cover"` para soporte de bordes redondeados y notch en iPhone/Android.
 
 ---
 

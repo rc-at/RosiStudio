@@ -445,8 +445,129 @@ export default function AdminPage() {
               </div>
             </div>
 
-            {/* Appointments Table */}
-            <div className="bg-white rounded-2xl border border-[#E5E0D8] shadow-sm overflow-hidden">
+            {/* Mobile Appointments Cards List */}
+            <div className="md:hidden space-y-3">
+              {filteredAppointments.length === 0 ? (
+                <div className="bg-white rounded-2xl p-8 border border-[#E5E0D8] text-center text-xs text-[#6B6863]">
+                  No se encontraron citas con los filtros seleccionados.
+                </div>
+              ) : (
+                filteredAppointments.map((app) => (
+                  <div
+                    key={app.id}
+                    className="bg-white rounded-2xl p-4 border border-[#E5E0D8] shadow-sm space-y-3"
+                  >
+                    <div className="flex items-start justify-between gap-2 border-b border-[#E5E0D8] pb-2.5">
+                      <div>
+                        <span className="font-mono text-[10px] text-[#6B6863] block">
+                          {app.id}
+                        </span>
+                        <h3 className="font-bold text-sm text-[#171717]">
+                          {app.clientName}
+                        </h3>
+                        <a
+                          href={`tel:${app.clientPhone}`}
+                          className="text-xs text-[#C9A34E] font-semibold flex items-center gap-1 mt-0.5"
+                        >
+                          <Phone className="w-3 h-3" />
+                          <span>{app.clientPhone}</span>
+                        </a>
+                      </div>
+                      <div>{getStatusBadge(app.status)}</div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-[10px] text-[#6B6863] block">Fecha & Hora</span>
+                        <span className="font-medium text-[#171717]">{app.date}</span>
+                        <span className="block text-[11px] text-[#6B6863]">{app.startTime} - {app.endTime}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-[#6B6863] block">Modalidad</span>
+                        <span className="font-medium text-[#171717]">
+                          {app.modality === 'DOMICILIO' ? 'A Domicilio' : 'En Local'}
+                        </span>
+                        <span className="block text-xs font-bold text-[#A5802C]">
+                          Total: S/ {app.totalPrice.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="text-xs text-[#6B6863] border-t border-dashed border-[#E5E0D8] pt-2">
+                      <span className="font-bold text-[#171717]">Servicios: </span>
+                      <span>{app.services.map((s) => s.name).join(', ')}</span>
+                    </div>
+
+                    {/* Mobile Action Buttons */}
+                    <div className="pt-2 border-t border-[#E5E0D8] flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedAppointment(app)}
+                        className="px-3 py-1.5 rounded-xl border border-[#E5E0D8] text-xs font-bold text-[#171717] hover:bg-[#E9E1D4]/40 flex items-center gap-1"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Detalles</span>
+                      </button>
+
+                      <div className="flex items-center gap-2">
+                        {app.status === 'PENDIENTE' && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setPendingAction({
+                                  appointmentId: app.id,
+                                  action: 'ACEPTADA',
+                                  label: 'Aceptar y confirmar solicitud',
+                                })
+                              }
+                              className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1 shadow-sm"
+                            >
+                              <Check className="w-3.5 h-3.5" />
+                              <span>Aceptar</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setPendingAction({
+                                  appointmentId: app.id,
+                                  action: 'RECHAZADA',
+                                  label: 'Rechazar solicitud',
+                                })
+                              }
+                              className="px-2.5 py-1.5 rounded-xl bg-red-100 text-red-800 text-xs font-bold flex items-center gap-1"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                              <span>Rechazar</span>
+                            </button>
+                          </>
+                        )}
+
+                        {app.status === 'ACEPTADA' && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setPendingAction({
+                                appointmentId: app.id,
+                                action: 'COMPLETADA',
+                                label: 'Marcar cita como completada',
+                              })
+                            }
+                            className="px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold flex items-center gap-1 shadow-sm"
+                          >
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            <span>Completar</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Desktop Appointments Table */}
+            <div className="hidden md:block bg-white rounded-2xl border border-[#E5E0D8] shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>

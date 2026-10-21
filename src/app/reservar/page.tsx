@@ -1,46 +1,44 @@
 import React, { Suspense } from 'react';
-import { Navbar } from '@/components/layout/Navbar';
+import { AppHeader } from '@/components/layout/AppHeader';
+import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { BookingWizard } from '@/components/booking/BookingWizard';
-import { Calendar } from 'lucide-react';
 
 export default function BookingPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F6F2]">
-      <Navbar />
+      <AppHeader />
 
-      <main className="flex-1 py-10 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E9E1D4]/70 text-[#171717] text-xs font-bold uppercase tracking-wider">
-              <Calendar className="w-3.5 h-3.5 text-[#C9A34E]" />
-              <span>Agenda Tu Experiencia</span>
-            </div>
-            <h1 className="font-heading text-3xl sm:text-4xl font-bold text-[#171717] tracking-tight">
-              Reserva tu Cita en ROSI STUDIO
-            </h1>
-            <p className="text-xs sm:text-sm text-[#6B6863]">
-              Sigue los sencillos pasos para elegir tus servicios, modalidad y horario preferido. Toda solicitud queda registrada para aprobación de la administradora.
-            </p>
-          </div>
-
-          {/* Booking Flow Wizard wrapped in Suspense for useSearchParams */}
-          <Suspense
-            fallback={
-              <div className="py-20 text-center">
-                <div className="w-10 h-10 border-4 border-[#C9A34E] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-                <p className="text-xs text-[#6B6863]">Cargando agenda de reservas...</p>
-              </div>
-            }
-          >
-            <BookingWizard />
-          </Suspense>
+      <main className="flex-1 px-3 sm:px-6 py-4 sm:py-8 max-w-4xl mx-auto w-full">
+        {/* Compact App Header */}
+        <div className="mb-4 sm:mb-6 text-center sm:text-left">
+          <span className="text-[10px] uppercase font-bold tracking-widest text-[#C9A34E] block">
+            Reserva de Citas
+          </span>
+          <h1 className="font-heading text-xl sm:text-2xl font-bold text-[#171717]">
+            Agenda tu Turno en ROSI STUDIO
+          </h1>
+          <p className="text-xs text-[#6B6863]">
+            Personaliza tus servicios, elige salón o domicilio y selecciona tu horario disponible.
+          </p>
         </div>
+
+        {/* Booking Flow Wizard wrapped in Suspense for useSearchParams */}
+        <Suspense
+          fallback={
+            <div className="py-20 text-center bg-white rounded-3xl border border-[#E5E0D8] p-8">
+              <div className="w-8 h-8 border-3 border-[#C9A34E] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+              <p className="text-xs text-[#6B6863]">Cargando agenda...</p>
+            </div>
+          }
+        >
+          <BookingWizard />
+        </Suspense>
       </main>
 
       <Footer />
+      <BottomNav />
       <WhatsAppButton />
     </div>
   );

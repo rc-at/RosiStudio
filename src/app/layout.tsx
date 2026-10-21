@@ -20,6 +20,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: "cover",
   themeColor: "#C9A34E",
 };
 
@@ -27,6 +28,16 @@ export const metadata: Metadata = {
   title: "ROSI STUDIO — Expertos en Belleza | Barbería, Peluquería y Estética",
   description:
     "Reserva tu cita en ROSI STUDIO. Servicios profesionales de barbería, peluquería, trenzas, manicure, pedicure, tintes y cuidado personal en local o a domicilio.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "ROSI STUDIO",
+  },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
   keywords: [
     "Rosi Studio",
     "barbería",
