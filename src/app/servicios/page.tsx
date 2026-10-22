@@ -6,7 +6,6 @@ import { useSearchParams } from 'next/navigation';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { DEMO_SERVICES } from '@/lib/data/demo-data';
 import { ServiceCategory } from '@/types';
 import { Clock, Scissors, ArrowRight, Search } from 'lucide-react';
@@ -188,7 +187,6 @@ export default function ServicesPage() {
 
       <Footer />
       <BottomNav />
-      <WhatsAppButton />
     </div>
   );
 }

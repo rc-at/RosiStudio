@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { BookingWizard } from '@/components/booking/BookingWizard';
 
 export default function BookingPage() {
@@ -39,7 +38,6 @@ export default function BookingPage() {
 
       <Footer />
       <BottomNav />
-      <WhatsAppButton />
     </div>
   );
 }

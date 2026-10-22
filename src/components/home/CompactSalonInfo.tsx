@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { DEMO_BUSINESS_CONFIG } from '@/lib/data/demo-data';
-import { MapPin, Clock, MessageCircle, Calendar } from 'lucide-react';
+import { MapPin, Clock, Calendar } from 'lucide-react';
 
 export function CompactSalonInfo() {
   return (
@@ -45,24 +45,14 @@ export function CompactSalonInfo() {
           </div>
         </div>
 
-        <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+        <div className="pt-2">
           <Link
             href="/reservar"
-            className="flex-1 py-3 px-4 rounded-2xl bg-[#171717] hover:bg-[#C9A34E] text-[#DFC27E] hover:text-[#171717] text-xs font-bold transition-all text-center flex items-center justify-center gap-2 shadow-sm"
+            className="w-full py-3.5 px-4 rounded-2xl bg-[#171717] hover:bg-[#C9A34E] text-[#DFC27E] hover:text-[#171717] text-xs font-bold transition-all text-center flex items-center justify-center gap-2 shadow-sm"
           >
             <Calendar className="w-4 h-4" />
             <span>Agendar mi cita ahora</span>
           </Link>
-
-          <a
-            href={`https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20Rosi%20Studio,%20quisiera%20hacer%20una%20consulta`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="py-3 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold transition-colors text-center flex items-center justify-center gap-2 shadow-sm"
-          >
-            <MessageCircle className="w-4 h-4 fill-current" />
-            <span>Escribir por WhatsApp</span>
-          </a>
         </div>
       </div>
     </section>

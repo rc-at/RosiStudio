@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { DEMO_PRODUCTS } from '@/lib/data/demo-data';
 import { ProductCategory } from '@/types';
-import { MessageCircle, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const PRODUCT_CATEGORIES: ('Todas' | ProductCategory)[] = [
   'Todas',
@@ -38,7 +37,7 @@ export default function ProductsPage() {
             Catálogo de Productos
           </h1>
           <p className="text-xs text-[#6B6863]">
-            Ceras, fijadores, tintes y aceites disponibles en salón o coordinados por WhatsApp
+            Ceras, fijadores, tintes y aceites de primera línea disponibles directamente en nuestro salón
           </p>
         </div>
 
@@ -111,15 +110,9 @@ export default function ProductsPage() {
                   </span>
                 </div>
 
-                <a
-                  href={`https://wa.me/51987654321?text=Hola%20ROSI%20STUDIO,%20deseo%20consultar%20por%20el%20producto:%20${encodeURIComponent(prod.name)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold shadow-sm transition-colors"
-                >
-                  <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                  <span>Consultar</span>
-                </a>
+                <span className="inline-flex items-center px-3 py-1.5 rounded-xl bg-[#F8F6F2] border border-[#E5E0D8] text-[#171717] text-xs font-semibold">
+                  En salón
+                </span>
               </div>
             </article>
           ))}
@@ -128,7 +121,6 @@ export default function ProductsPage() {
 
       <Footer />
       <BottomNav />
-      <WhatsAppButton />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { DEMO_PRODUCTS, DEMO_BUSINESS_CONFIG } from '@/lib/data/demo-data';
-import { MessageCircle, ArrowRight } from 'lucide-react';
+import { DEMO_PRODUCTS } from '@/lib/data/demo-data';
+import { ArrowRight } from 'lucide-react';
 
 export function ProductsScroll() {
   const products = DEMO_PRODUCTS.slice(0, 4);
@@ -60,15 +60,9 @@ export function ProductsScroll() {
                 S/ {prod.price.toFixed(2)}
               </span>
 
-              <a
-                href={`https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20Rosi%20Studio,%20quisiera%20consultar%20por%20el%20producto:%20${encodeURIComponent(prod.name)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-[11px] font-bold transition-colors shadow-sm"
-              >
-                <MessageCircle className="w-3 h-3 fill-current" />
-                <span>Pedir</span>
-              </a>
+              <span className="text-[10px] text-[#6B6863] bg-[#F8F6F2] px-2 py-1 rounded-lg border border-[#E5E0D8] font-medium">
+                En salón
+              </span>
             </div>
           </article>
         ))}

@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BrandLogo } from './BrandLogo';
 import { DEMO_BUSINESS_CONFIG, DEMO_BUSINESS_HOURS } from '@/lib/data/demo-data';
-import { MapPin, Phone, Clock, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Clock } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -90,13 +90,11 @@ export function Footer() {
               </div>
               <div className="pt-2">
                 <a
-                  href={`https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20Rosi%20Studio,%20quisiera%20consultar%20sobre%20sus%20servicios`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-medium text-xs shadow transition-all duration-200"
+                  href={`tel:${DEMO_BUSINESS_CONFIG.phone}`}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-[#C9A34E] text-[#DFC27E] hover:text-[#171717] font-medium text-xs border border-[#C9A34E]/30 transition-all duration-200"
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Contactar por WhatsApp</span>
+                  <Phone className="w-4 h-4" />
+                  <span>Llamar al {DEMO_BUSINESS_CONFIG.phone}</span>
                 </a>
               </div>
             </div>

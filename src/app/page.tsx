@@ -2,7 +2,6 @@ import React from 'react';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { MobileAppHero } from '@/components/home/MobileAppHero';
 import { CategoryChips } from '@/components/home/CategoryChips';
 import { PopularServicesScroll } from '@/components/home/PopularServicesScroll';
@@ -26,7 +25,6 @@ export default function HomePage() {
 
       <Footer />
       <BottomNav />
-      <WhatsAppButton />
     </div>
   );
 }

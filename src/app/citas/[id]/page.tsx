@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { fetchAppointmentById } from '@/lib/firebase/firestore';
 import { Appointment } from '@/types';
 import { formatDateDisplay } from '@/lib/availability';
@@ -114,7 +113,7 @@ function AppointmentDetailContent() {
       <div className="p-4 rounded-2xl bg-[#F8F6F2] border border-[#E5E0D8] text-xs space-y-1">
         {appointment.status === 'PENDIENTE' && (
           <p className="text-[#6B6863]">
-            Tu solicitud está en revisión. La administradora de ROSI STUDIO verificará los detalles y te confirmará por WhatsApp o llamada al <strong>{appointment.clientPhone}</strong>.
+            Tu solicitud está en revisión. La administradora de ROSI STUDIO verificará los detalles y te confirmará por llamada al <strong>{appointment.clientPhone}</strong>.
           </p>
         )}
         {appointment.status === 'ACEPTADA' && (
@@ -173,13 +172,11 @@ function AppointmentDetailContent() {
       {/* Actions */}
       <div className="pt-2">
         <a
-          href={`https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20Rosi%20Studio,%20quisiera%20consultar%20por%20mi%20cita%20${appointment.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold shadow transition-colors"
+          href={`tel:${DEMO_BUSINESS_CONFIG.phone}`}
+          className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#171717] hover:bg-[#C9A34E] text-[#DFC27E] hover:text-[#171717] text-xs font-bold shadow transition-colors"
         >
           <Phone className="w-4 h-4" />
-          <span>Contactar con el salón por WhatsApp</span>
+          <span>Llamar al salón para consultas</span>
         </a>
       </div>
     </div>
@@ -216,7 +213,6 @@ export default function AppointmentStatusPage() {
 
       <Footer />
       <BottomNav />
-      <WhatsAppButton />
     </div>
   );
 }

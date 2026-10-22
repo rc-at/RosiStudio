@@ -5,18 +5,15 @@ import Link from 'next/link';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { fetchAppointments } from '@/lib/firebase/firestore';
 import { Appointment, AppointmentStatus } from '@/types';
 import { formatDateDisplay } from '@/lib/availability';
-import { DEMO_BUSINESS_CONFIG } from '@/lib/data/demo-data';
 import {
   Calendar,
   Clock,
   CheckCircle2,
   XCircle,
   Home,
-  MessageCircle,
   Search,
   ArrowRight,
   Plus,
@@ -247,17 +244,6 @@ export default function AppointmentsListPage() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <a
-                      href={`https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20Rosi%20Studio,%20quisiera%20consultar%20por%20mi%20cita%20${app.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors"
-                      title="Consultar por WhatsApp"
-                      aria-label="Consultar cita por WhatsApp"
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                    </a>
-
                     <Link
                       href={`/citas/${app.id}`}
                       className="px-3 py-2 rounded-xl bg-[#F8F6F2] hover:bg-[#E9E1D4]/50 text-[#171717] text-xs font-bold border border-[#E5E0D8] transition-colors"
@@ -274,7 +260,6 @@ export default function AppointmentsListPage() {
 
       <Footer />
       <BottomNav />
-      <WhatsAppButton />
     </div>
   );
 }

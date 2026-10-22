@@ -83,13 +83,13 @@
     │   │   ├── BottomNav.tsx             # Barra fija inferior móvil de 5 pestañas (Safe-Area)
     │   │   ├── Navbar.tsx                # Re-export de AppHeader para retrocompatibilidad
     │   │   ├── Footer.tsx                # Pie de página con información de contacto y horarios
-    │   │   └── WhatsAppButton.tsx        # Botón flotante para WhatsApp con safe-area
+    │   │   └── WhatsAppButton.tsx        # Componente desactivado (WhatsApp removido)
     │   ├── home/
     │   │   ├── MobileAppHero.tsx         # Tarjeta de acción inmediata VIP con botón "Reservar cita"
     │   │   ├── CategoryChips.tsx         # Fila táctil de acceso rápido a categorías (scroll horizontal)
     │   │   ├── PopularServicesScroll.tsx # Carrusel snap de servicios populares
     │   │   ├── LooksGalleryScroll.tsx    # Historias/looks recientes realizados
-    │   │   ├── ProductsScroll.tsx        # Carrusel de productos recomendados con enlace a WhatsApp
+    │   │   ├── ProductsScroll.tsx        # Carrusel de productos recomendados disponibles en salón
     │   │   └── CompactSalonInfo.tsx      # Información compacta del local y atención a domicilio
     │   └── booking/
     │       └── BookingWizard.tsx         # Asistente interactivo de reserva (5 pasos + éxito)
@@ -98,7 +98,7 @@
         ├── globals.css                   # Tokens, safe-area padding inferior y no-scrollbar utilities
         ├── page.tsx                      # Pantalla de Inicio estilo App Móvil
         ├── servicios/page.tsx            # Catálogo móvil con chips de categoría y buscador reactivo
-        ├── productos/page.tsx            # Catálogo de productos con consulta directa vía WhatsApp
+        ├── productos/page.tsx            # Catálogo de productos disponibles en el salón
         ├── reservar/page.tsx             # Asistente de reserva adaptado a teléfonos
         ├── citas/page.tsx                # "Mis Citas" con filtros por estado y buscador por código
         ├── citas/[id]/page.tsx           # Consulta directa y seguimiento de cita específica
@@ -129,7 +129,7 @@ En esta etapa se transformó la experiencia web convencional en una **interfaz d
 2. **Chips de Categoría (`CategoryChips.tsx`):** Fila con desplazamiento táctil horizontal fluido (`no-scrollbar`) para saltar de inmediato a cualquier especialidad (Cortes, Trenzas, Manicure, Pedicure, Tintes, Cejas, Peinados).
 3. **Servicios Populares (`PopularServicesScroll.tsx`):** Carrusel horizontal con ajuste por parada (`snap-x-mandatory`) con insignias de duración, precio en Soles y botón táctil de reserva.
 4. **Galería de Looks Recientes (`LooksGalleryScroll.tsx`):** Formato tipo tarjeta de historias de Instagram para apreciar resultados reales de trenzas, cortes y color.
-5. **Productos Destacados (`ProductsScroll.tsx`):** Productos con consulta asistida directa vía WhatsApp.
+5. **Productos Destacados (`ProductsScroll.tsx`):** Productos con indicación de disponibilidad directa en salón.
 6. **Información Compacta (`CompactSalonInfo.tsx`):** Horarios, ubicación física y transparencia sobre la modalidad a domicilio.
 
 ### D. Nuevas Pantallas de Aplicación
@@ -140,7 +140,7 @@ En esta etapa se transformó la experiencia web convencional en una **interfaz d
 - **`/perfil` (Perfil de Usuario):**
   - Identificación visual del cliente (avatar, nombre, correo y etiqueta de estado).
   - Autenticación con Google conectada a `signInWithGoogle` / `signOut` con fallback seguro para modo invitado.
-  - Menú de accesos directos: Mis Citas, Reservar Turno, Soporte por WhatsApp y Acceso al Panel Administrativo.
+  - Menú de accesos directos: Mis Citas, Reservar Turno, Contacto Telefónico y Acceso al Panel Administrativo.
 
 ### E. Panel de Administración Responsivo (`/admin`)
 - En dispositivos móviles (`md:hidden`), las reservas se presentan en **tarjetas táctiles interactivas individuales**, eliminando el scroll horizontal forzado de tablas anchas.
@@ -167,7 +167,7 @@ En esta etapa se transformó la experiencia web convencional en una **interfaz d
    - Bloquea cualquier horario que colisione con una cita existente en estado `PENDIENTE` o `ACEPTADA`, contemplando además un margen de descanso/esterilización de 10 minutos.
 4. **Paso 4 (Datos del Cliente):** Solicita Nombre y Teléfono (obligatorios) y Correo/Notas (opcionales). Cuenta con opción de autocompletado mediante Google.
 5. **Paso 5 (Revisión):** Resumen detallado de servicios, modalidad, fecha, horario estimado y precio total.
-6. **Paso 6 (Confirmación):** Emite el código identificador único (ej. `cita-mviq872c-j11t`), explica que la cita está **Pendiente de Aprobación** por la administradora y ofrece enlace directo para notificar por WhatsApp.
+6. **Paso 6 (Confirmación):** Emite el código identificador único (ej. `cita-mviq872c-j11t`), explica que la cita está **Pendiente de Aprobación** por la administradora y ofrece enlace para consultar el estado o hacer otra reserva.
 
 ### B. Snapshots Históricos en Citas
 Cada documento de cita almacena una copia estática del nombre, precio y duración de los servicios seleccionados al momento de reservar. Si los precios del catálogo cambian en el futuro, las citas históricas no se alteran.

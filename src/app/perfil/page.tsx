@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import {
   signInWithGoogle,
   signOut,
@@ -17,7 +16,7 @@ import {
   LogOut,
   Calendar,
   Clock,
-  MessageCircle,
+  Phone,
   ShieldCheck,
   ChevronRight,
 } from 'lucide-react';
@@ -180,17 +179,15 @@ export default function ProfilePage() {
           </Link>
 
           <a
-            href={`https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20Rosi%20Studio,%20quisiera%20hacer%20una%20consulta`}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`tel:${DEMO_BUSINESS_CONFIG.phone}`}
             className="p-4 flex items-center justify-between hover:bg-[#F8F6F2] transition-colors"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
-                <MessageCircle className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-xl bg-[#E9E1D4]/60 text-[#171717] flex items-center justify-center">
+                <Phone className="w-4 h-4 text-[#A5802C]" />
               </div>
               <div>
-                <span className="font-bold text-[#171717] block">Soporte por WhatsApp</span>
+                <span className="font-bold text-[#171717] block">Contacto Telefónico</span>
                 <span className="text-[11px] text-[#6B6863]">{DEMO_BUSINESS_CONFIG.phone}</span>
               </div>
             </div>
@@ -230,7 +227,6 @@ export default function ProfilePage() {
 
       <Footer />
       <BottomNav />
-      <WhatsAppButton />
     </div>
   );
 }

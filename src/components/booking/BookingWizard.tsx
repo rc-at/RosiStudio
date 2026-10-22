@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useSyncExternalStore } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
   Service,
@@ -265,18 +266,16 @@ export function BookingWizard() {
         </div>
 
         <p className="text-xs text-[#6B6863] leading-relaxed">
-          Nuestra administradora revisará la disponibilidad de la agenda y te contactará al <strong>{createdAppointment.clientPhone}</strong> o por WhatsApp para confirmar formalmente tu cita.
+          Nuestra administradora revisará la disponibilidad de la agenda y te contactará al <strong>{createdAppointment.clientPhone}</strong> para confirmar formalmente tu cita.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
-          <a
-            href={`https://wa.me/${DEMO_BUSINESS_CONFIG.whatsapp}?text=Hola%20Rosi%20Studio,%20acabo%20de%20solicitar%20la%20reserva%20${createdAppointment.id}%20a%20nombre%20de%20${encodeURIComponent(createdAppointment.clientName)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold transition-all shadow text-center"
+          <Link
+            href={`/citas/${createdAppointment.id}`}
+            className="flex-1 py-3 px-4 rounded-xl bg-[#171717] hover:bg-[#C9A34E] text-[#DFC27E] hover:text-[#171717] text-xs font-bold transition-all shadow text-center"
           >
-            Avisar por WhatsApp
-          </a>
+            Ver estado de mi cita
+          </Link>
 
           <button
             type="button"
@@ -797,7 +796,7 @@ export function BookingWizard() {
             <div className="space-y-1">
               <label className="text-xs font-semibold text-[#171717] flex items-center gap-1">
                 <Phone className="w-3.5 h-3.5 text-[#C9A34E]" />
-                <span>Teléfono / WhatsApp *</span>
+                <span>Teléfono de contacto *</span>
               </label>
               <input
                 type="tel"
