@@ -1,8 +1,10 @@
 # ROSI STUDIO — Contexto Integral y Estado del Proyecto
 
 > **Fecha de creación del documento:** 21 de octubre de 2026  
-> **Estado actual:** Etapa 1 completada + **Rediseño UX/UI Mobile App First (PWA-Ready) completado con éxito.**  
-> **Propósito:** Registrar todos los requisitos, decisiones arquitectónicas, código implementado, configuraciones pendientes y próximos pasos para retomar el desarrollo en cualquier momento sin pérdida de alcance.
+> **Última actualización:** 21 de octubre de 2026  
+> **Estado actual:** ✅ **Etapa 1 + Rediseño Mobile App First completados** | 🌐 **Publicado en GitHub y Desplegado en Vercel (24/7 activo)** | ⏳ **En espera de feedback del cliente para venta y ajustes menores.**  
+> **Repositorio Oficial:** [https://github.com/rc-at/RosiStudio](https://github.com/rc-at/RosiStudio)  
+> **Propósito:** Registrar todos los requisitos, decisiones arquitectónicas, código implementado, configuraciones pendientes y próximos pasos para retomar el desarrollo en cualquier momento sin pérdida de alcance ni contexto.
 
 ---
 
@@ -13,7 +15,7 @@
 ### Objetivos Clave
 - **Mobile-first:** Experiencia óptima en teléfonos inteligentes (Android y iPhone), adaptable a tablets y computadoras de escritorio.
 - **Elegancia y Confianza:** Diseño visual refinado y luminoso que transmite profesionalismo e higiene.
-- **Cero Costos Iniciales:** Arquitectura adaptada para mantenerse estrictamente en el **plan gratuito Spark de Firebase**.
+- **Cero Costos Iniciales:** Arquitectura adaptada para mantenerse estrictamente en el **plan gratuito Spark de Firebase** y plan Hobby gratuito de Vercel.
 - **Flujo Guiado de Citas:** Selección de servicios, cálculo acumulativo de tiempo y precio, modalidad (local o domicilio), selector inteligente de turnos libres y confirmación con estado **Pendiente de Aprobación**.
 - **Panel Administrativo Privado:** Dashboard con indicadores en tiempo real, gestión de estados de citas (`PENDIENTE`, `ACEPTADA`, `RECHAZADA`, `COMPLETADA`, `CANCELADA`), visualización de horarios y configuración.
 
@@ -44,9 +46,10 @@
 - **Lenguaje:** TypeScript 5.
 - **Estilos:** Tailwind CSS v4 configurado en [globals.css](file:///Users/roy-asmad/Documents/Web/RosiStudio/src/app/globals.css) con tokens temáticos (`--color-marfil`, `--color-gold`, etc.).
 - **Autenticación:** Firebase Authentication (Google OAuth y verificación de administradoras).
-- **Base de Datos:** Cloud Firestore.
+- **Base de Datos:** Cloud Firestore (con fallback transparente a memoria para demostración sin credenciales).
 - **Iconografía:** `lucide-react`.
-- **Control de Versiones:** Git inicializado con commit inicial `feat: initial release of Rosi Studio web booking and management app`.
+- **Control de Versiones:** Git vinculado al repositorio remoto en GitHub (`https://github.com/rc-at/RosiStudio.git`).
+- **Alojamiento en Producción:** Vercel (Producción continua 24/7 con SSL automático).
 
 ---
 
@@ -60,7 +63,7 @@
 ├── firestore.indexes.json                # Índices compuestos para consultas de citas
 ├── package.json                          # Dependencias: next, react 19, firebase, lucide-react, tailwindcss v4
 ├── tsconfig.json                         # Configuración estricta de TypeScript
-├── CONTEXTO_PROYECTO.md                  # Este documento de contexto integral
+├── CONTEXTO.md                           # Documento de contexto integral y roadmap
 ├── public/
 │   ├── manifest.json                     # PWA Web App Manifest (standalone, theme_color, icons)
 │   └── icon.svg                          # Emblema oficial en SVG para icono de aplicación
@@ -300,12 +303,25 @@ Esta sección desglosa de manera exhaustiva todos los elementos que requieren co
 
 ### D. Contenido, Activos Visuales y Publicación
 
-- [ ] **Sustitución de Contenidos y Precios Oficiales:**
-  - [ ] Validar con la dueña del negocio los precios reales de los servicios (actualmente identificados como referenciales de demostración).
+- [ ] **Sustitución de Contenidos y Precios Oficiales (Post-Venta):**
+  - [ ] Validar con la dueña del negocio los precios reales de los servicios (actualmente referenciales).
   - [ ] Validar el importe exacto del recargo por atención a domicilio (actualmente referencial en S/ 15.00).
 - [ ] **Activos Gráficos Definitivos:**
   - [ ] Reemplazar las fotos de demostración de Unsplash por fotografías de trabajos reales del salón cuando estén disponibles.
   - [ ] Integrar el archivo vectorial final del logotipo original si se proporciona en formato SVG o PNG en alta resolución.
-- [ ] **Despliegue a Producción (Hosting):**
-  - [ ] Configurar el archivo `firebase.json` para despliegue en **Firebase Hosting**.
-  - [ ] Validar si se utiliza exportación estática (`output: 'export'`) o Firebase App Hosting según las necesidades de funciones de servidor.
+- [x] **Despliegue a Producción (Hosting):**
+  - [x] Repositorio oficial conectado en GitHub: [https://github.com/rc-at/RosiStudio](https://github.com/rc-at/RosiStudio).
+  - [x] Despliegue en la nube completado en **Vercel** con CI/CD automático, SSL y disponibilidad 24/7.
+  - [x] Eliminación completa de enlaces a WhatsApp/chat por requerimiento estratégico de preventa.
+  - [x] Desactivación del indicador "N" de desarrollo de Next.js (`devIndicators: false`).
+  - [x] Optimización de hidratación en el asistente de reservas (`/reservar`) para renderizado instantáneo.
+
+---
+
+## 8. Estado para la Siguiente Sesión (Proceso de Venta)
+
+- **Fase actual:** La aplicación web está 100% operativa, desplegada en internet y lista para presentación y validación por parte del cliente.
+- **Próximos pasos al reanudar:**
+  1. Recibir y listar el feedback, solicitudes de cambio o personalizaciones menores del cliente.
+  2. Ajustar catálogo de servicios, precios, datos de contacto o imágenes según lo acordado.
+  3. Vincular el proyecto real de Firebase (Auth y Firestore) si el cliente aprueba la puesta en marcha con base de datos en vivo.
