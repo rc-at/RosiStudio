@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useSyncExternalStore } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
@@ -46,14 +46,11 @@ export function BookingWizard() {
 
   // Multi-step state (1 to 5, 6 is Success screen)
   const [step, setStep] = useState<number>(1);
+  const [minDate, setMinDate] = useState<string>('');
 
-  const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
-  );
-
-  const minDate = mounted ? new Date().toISOString().split('T')[0] : '';
+  useEffect(() => {
+    setMinDate(new Date().toISOString().split('T')[0]);
+  }, []);
 
   const [selectedServices, setSelectedServices] = useState<Service[]>(() => {
     if (preselectedServiceId) {
@@ -99,7 +96,7 @@ export function BookingWizard() {
   const totalPrice = servicesSubtotal + homeFee;
 
   // Available slots for selected date
-  const availableSlots = (mounted && selectedDate && totalDurationMinutes > 0)
+  const availableSlots = (selectedDate && totalDurationMinutes > 0)
     ? generateAvailableSlots({
         date: selectedDate,
         totalDurationMinutes,
@@ -185,14 +182,7 @@ export function BookingWizard() {
     }
   };
 
-  if (!mounted) {
-    return (
-      <div className="bg-white rounded-3xl p-12 border border-[#E5E0D8] shadow-sm text-center max-w-xl mx-auto space-y-3">
-        <div className="w-8 h-8 border-3 border-[#C9A34E] border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xs text-[#6B6863]">Cargando calendario y servicios...</p>
-      </div>
-    );
-  }
+
 
   // STEP 6: Confirmation Screen
   if (step === 6 && createdAppointment) {
